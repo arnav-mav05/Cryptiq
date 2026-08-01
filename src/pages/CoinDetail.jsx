@@ -46,5 +46,20 @@ export const CoinDetail = () => {
     );
   }
 
-  return ( <div> Coin Details </div> );
+  return (
+    <div className="app">
+      <header className="header">
+        <div className="header-content">
+          <div className="logo-section">
+            <h1>🚀 Crypto Tracker</h1>
+            <p>Real-time cryptocurrency prices and market data</p>
+          </div>
+
+          <button onClick={() => navigate("/")} className="back-button">
+            ← Back to List
+          </button>
+        </div>
+      </header>
+    </div>
+  );
 };
