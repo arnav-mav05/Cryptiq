@@ -120,6 +120,11 @@ body {
   gap: 1rem;
 }
 
+.filter-group select option {
+  background-color: #121212;
+  color: white;
+}
+
 .filter-group label {
   color: #e0e0e0;
   font-weight: 600;
