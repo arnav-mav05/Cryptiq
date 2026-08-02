@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchCryptos } from "../api/coinGecko";
 import { CryptoCard } from "../components/CryptoCard";
-
 export const Home = () => {
   const [cryptoList, setCryptoList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
@@ -11,7 +10,9 @@ export const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    fetchCryptoData();
+    const interval = setInterval(fetchCryptoData, 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export const Home = () => {
       const data = await fetchCryptos();
       setCryptoList(data);
     } catch (err) {
-      console.log("Error fetching crypto: ", err);
+      console.error("Error fetching crypto: ", err);
     } finally {
       setIsLoading(false);
     }
@@ -35,6 +36,7 @@ export const Home = () => {
         crypto.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         crypto.symbol.toLowerCase().includes(searchQuery.toLowerCase()),
     );
+
     filtered.sort((a, b) => {
       switch (sortBy) {
         case "name":
@@ -51,6 +53,7 @@ export const Home = () => {
           return a.market_cap_rank - b.market_cap_rank;
       }
     });
+
     setFilteredList(filtered);
   };
 
@@ -59,7 +62,7 @@ export const Home = () => {
       <header className="header">
         <div className="header-content">
           <div className="logo-section">
-            <h1>🚀 cryptiq</h1>
+            <h1>🚀 Cryptiq</h1>
             <p>Real-time cryptocurrency prices and market data</p>
           </div>
           <div className="search-section">
@@ -113,6 +116,10 @@ export const Home = () => {
           ))}
         </div>
       )}
+
+      <footer className="footer">
+        <p>Data provided by CoinGecko API • Updated every 30 seconds</p>
+      </footer>
     </div>
   );
 };
